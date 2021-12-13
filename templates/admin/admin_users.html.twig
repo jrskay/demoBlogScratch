@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des utilisateurs
+{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+    <div class="text-center alert alert-success my-2">
+    {{ message }}
+    </div>
+{% endfor %}
+
+<a href="{{ path('admin_new_comment') }}" class="btn btn-success my-3">Créer un nouvel utilisateur</a>
+
+	<table id="example" class="table table-bordered text-center">
+		<thead>
+			<tr>
+				{% for data in colonnes %}
+					{% if data != 'id' %}
+						<th>
+							{{ data }}
+						</th>
+					{% endif %}
+				{% endfor %}
+				<th>Edit</th>
+				<th>Supp</th>
+				{#J'affiche le nom de tous les champs sauf le champ id#}
+			</tr>
+		</thead>
+		<tbody>
+        {% for data in users %}
+            <tr>
+                <td>{{ data.email }}</td>
+                <td>
+	                {% for role in data.roles %}
+	                	{{ role }} <br>
+	                {% endfor %}                	
+                </td>
+                <td>******</td>
+                <td>{{ data.prenom }}</td>
+                <td>{{ data.nom }}</td>
+
+                <td>
+                	<a href="{{ path('admin_edit_user', {'id': data.id}) }}" class="btn btn-warning"><i class="fas fa-edit fa-1x"></i></a>
+                </td>
+                <td>
+                	<a href="{{ path('admin_delete_user', {'id': data.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+	</table>
+
+{% endblock %}

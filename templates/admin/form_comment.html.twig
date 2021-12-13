@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Backoffice | Formulaire du commentaire
+{% endblock %}
+
+{% block body %}
+
+	<h1 class="display-4 text-center my-4">
+
+		{% if editMode %}
+
+			BACKOFFICE | Modification du commentaire
+		{% else %}
+			BACKOFFICE | Poster un nouveau commentaire
+		{% endif %}
+
+	</h1>
+
+	{{ form_start(commentForm) }}
+
+	{{ form_row(commentForm.author, {
+    'label': "L'auteur"
+}) }}
+
+	{{ form_row(commentForm.content, {
+    'label': 'Contenu'
+}) }}
+
+	{{ form_row(commentForm.article) }}
+
+	<button type="submit" class="btn btn-primary mt-2">
+
+		{% if editMode %}
+			Enregister les modifications
+		{% else %}
+			Ajouter le commentaire
+		{% endif %}
+
+	</button>
+
+	{{ form_end(commentForm) }}
+
+{% endblock %}
+

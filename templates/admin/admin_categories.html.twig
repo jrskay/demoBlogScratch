@@ -1,0 +1,49 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des catégories
+{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+    <div class="text-center alert alert-success my-2">
+    {{ message }}
+    </div>
+{% endfor %}
+
+<a href="{{ path('admin_new_category') }}" class="btn btn-success my-2">Créer une nouvelle catégorie</a>
+
+	<table id="example" class="table table-bordered text-center">
+		<thead>
+			<tr>
+				{% for data in colonnes %}
+					{% if data != 'id' %}
+						<th>
+							{{ data }}
+						</th>
+					{% endif %}
+				{% endfor %}
+				<th>Edit</th>
+				<th>Supp</th>
+				{#J'affiche le nom de tous les champs sauf le champ id#}
+			</tr>
+		</thead>
+		<tbody>
+        {% for data in categories %}
+            <tr>
+                <td>{{ data.title }}</td>
+                <td>{{ data.description | raw }}</td>
+                <td>
+                <a href="{{ path('admin_edit_category', {'id': data.id}) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                </td>
+
+                <td>
+                <a href="{{ path('admin_delete_category', {'id': data.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+	</table>
+
+{% endblock %}
+

@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Backoffice | Formulaire de catégorie
+{% endblock %}
+
+{% block body %}
+
+	<h1 class="display-4 text-center my-4">
+
+		{% if editMode %}
+
+			BACKOFFICE | Modification de la catégorie
+		{% else %}
+			BACKOFFICE | Ajouter une nouvelle catégorie
+		{% endif %}
+
+	</h1>
+
+	{{ form_start(categoryForm) }}
+
+	{{ form_row(categoryForm.title, {
+    'label': 'Titre'
+}) }}
+
+	{{ form_row(categoryForm.description, {
+    'label': 'Description'
+}) }}
+
+	<button type="submit" class="btn btn-primary mt-2">
+
+		{% if editMode %}
+			Enregister les modifications
+		{% else %}
+			Ajouter la catégorie
+		{% endif %}
+
+	</button>
+
+	{{ form_end(categoryForm) }}
+
+{% endblock %}

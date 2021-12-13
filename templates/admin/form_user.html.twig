@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Backoffice | Formulaire d'article
+{% endblock %}
+
+{% block body %}
+
+	<h1 class="display-4 text-center my-4">
+
+		{% if editMode %}
+
+			BACKOFFICE | Modification de l'article
+		{% else %}
+			BACKOFFICE | Poster un nouvel article
+		{% endif %}
+
+	</h1>
+
+	{{ form_start(userForm) }}
+	{{ form_start(userForm.email) }}
+	{{ form_start(userForm.plainPassword) }}
+	{{ form_start(userForm.nom) }}
+	{{ form_start(userForm.prenom) }}
+	{{ form_start(userForm.roles) }}
+
+	<button type="submit" class="btn btn-primary mt-2">
+
+		{% if editMode %}
+			Enregister les modifications
+		{% else %}
+			Ajouter l'article
+		{% endif %}
+
+	</button>
+
+	{{ form_end(userForm) }}
+
+{% endblock %}

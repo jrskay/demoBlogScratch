@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}Welcome!
+            {% endblock %}
+        </title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+                           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+        {% endblock %}
+
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        {# Lien Accueil #}
+                        <a class="nav-link active" href="{{ path('blog') }}">Accueil</a>
+                        {# Lien Nouvel article #}
+                        <a class="nav-link" href="{{ path('blog_create') }}">Nouvel article</a>
+
+                        {#En TWIG, app.user récupere les données de l'utilisateur connecté ou NULL s'il n'y a pas d'utilisateur connecté#}
+                        {# Si un utilisateur est connecté alors j'affiche le lien vers la deconnexion et le lien vers profil #}
+                        {% if app.user %}
+                            {# Lien Profil #}
+                            <a class="nav-link active" href="{{ path('profil') }}">Profil</a>
+                            {# Lien Deconnexion #}
+                            <a class="nav-link active" href="{{ path('app_logout') }}">Deconnexion</a>
+                        {#Sinon j'affiche les liens vers l'inscription de la connexion #}
+                        {% else %}
+                            {# Lien Inscription #}
+                            <a class="nav-link active" href="{{ path('app_register') }}">Inscription</a>
+                            {# Lien Connexion #}
+                            <a class="nav-link active" href="{{ path('app_login') }}">Connexion</a>
+                        {% endif %}
+
+                        {# Si j'ai le role ROLE_ADMIN alors on affiche le lien backoffice #}
+                        {% if is_granted('ROLE_ADMIN') %}   
+                            {# Lien BACKOFFICE #}                         
+                            <a class="nav-link active" href="{{ path('admin') }}">BACKOFFICE</a>
+                        {% endif %}
+                        {# Lien Contact #}
+                        <a class="nav-link" href="{{ path('blog_contact') }}">Contact</a>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="container"> {% block body %}{% endblock %} </div>
+
+            {% block javascripts %}
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+                <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+                <script src="{{ asset('js/script.js') }}"></script>
+            {% endblock %}
+
+        </body>
+    </html>
+

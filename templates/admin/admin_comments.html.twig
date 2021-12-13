@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des commentaires
+{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+    <div class="text-center alert alert-success my-2">
+    {{ message }}
+    </div>
+{% endfor %}
+
+<a href="{{ path('admin_new_comment') }}" class="btn btn-success my-3 table-hover">Créer un nouveau commentaire</a>
+
+	<table id="example" class="table table-bordered text-center">
+		<thead>
+			<tr>
+				{% for data in colonnes %}
+					{% if data != 'id' %}
+						<th>
+							{{ data }}
+						</th>
+					{% endif %}
+				{% endfor %}
+				<th>L'auteur</th>
+				<th>Article</th>
+
+				<th>Edit</th>
+				<th>Supp</th>
+				{#J'affiche le nom de tous les champs sauf le champ id#}
+			</tr>
+		</thead>
+		<tbody>
+        {% for data in comments %}
+            <tr>
+                <td>{{ data.content | raw }}</td>
+                <td>{{ data.createdAt | date('d/m/Y à H:i:s') }}</td>
+                <td>{{ data.author.prenom }}</td>
+                <td>{{ data.article.title }}</td>
+
+                <td>
+                <a href="{{ path('admin_edit_comment', {'id': data.id}) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                </td>
+
+                <td>
+                <a href="{{ path('admin_delete_comment', {'id': data.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+	</table>
+
+{% endblock %}

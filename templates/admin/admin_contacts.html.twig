@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}BO Contact
+{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+    <div class="text-center alert alert-success">
+    {{ message }}
+    </div>
+{% endfor %}
+
+<a href="{{ path('admin_new_contact') }}" class="btn btn-success my-2">Crée un nouveau contact</a>
+
+	<table id="example" class="table table-bordered text-center">
+		<thead>
+			<tr>
+				{% for data in colonnes %}
+					{% if data != 'id' %}
+						<th>
+							{{ data }}
+						</th>
+					{% endif %}
+				{% endfor %}
+				<th>Editer</th>
+				<th>Supprimer</th>
+            </tr>
+		</thead>
+		<tbody>
+        {% for data in contacts %}
+            <tr>
+                <td>{{ data.firstname }}</td>
+                <td>{{ data.lastname }}</td>
+                <td>{{ data.email }}</td>
+                <td>{{ data.message }}</td>
+                <td>
+                    <a href="{{ path('admin_edit_contact', {'id': data.id}) }}" class="text-dark">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('admin_delete_contact', {'id': data.id}) }}" class="text-dark">
+                        <i class="fa fa-trash-alt"></i>
+                    </a>
+                </td>
+                </tr>
+                
+        {% endfor %}
+        </tbody>
+	</table>
+
+{% endblock %}
+

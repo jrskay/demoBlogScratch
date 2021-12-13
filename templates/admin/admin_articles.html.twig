@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des articles
+{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('success') %}
+    <div class="text-center alert alert-success">
+    {{ message }}
+    </div>
+{% endfor %}
+
+<a href="{{ path('admin_new_article') }}" class="btn btn-success my-2">Créer un nouvel article</a>
+
+	<table id="example" class="table table-bordered text-center">
+		<thead>
+			<tr>
+				{% for data in colonnes %}
+					{% if data != 'id' %}
+						<th>
+							{{ data }}
+						</th>
+					{% endif %}
+				{% endfor %}
+				<th>Catégorie</th>
+				<th>Edit</th>
+				<th>Supp</th>
+				{#J'affiche le nom de tous les champs sauf le champ id#}
+			</tr>
+		</thead>
+		<tbody>
+        {% for data in articles %}
+            <tr>
+                <td>{{ data.title }}</td>
+                <td>{{ data.content | raw }}</td>
+                <td><img 
+                {% if data.image starts with 'http' %}
+                src="{{ data.image }}"
+                {% else %}
+                    src="{{ asset('images/articles/' ~ data.image) }}"
+                {% endif %}
+                 alt="{{ data.title }}" class="img-fluid"></td>
+                 {# si le nom de l'image commence par 'http', c'est une url => pas besoin d'asset() #}
+                 {# sinon, c'est un nom unique =>  image uploadée => on utilise asset() pour recuperer l'image dans le dossier public/ #}
+                <td>{{ data.createdAt | date('d/m/Y à H:i:s') }}</td>
+                <td>{{ data.updatedAt | date('d/m/Y à H:i:s') }}</td>
+                <td>{{ data.category.title }}</td>
+                <td>
+                <a href="{{ path('admin_edit_article', {'id': data.id}) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                </td>
+
+                <td>
+                <a href="{{ path('admin_delete_article', {'id': data.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+	</table>
+
+{% endblock %}
+

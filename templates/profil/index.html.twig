@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}Profil{% endblock %}
+{% block body %}
+	{% for msg in app.flashes('success') %}
+		<div class="alert alert-success text-center mt-2">
+			{{ msg }}
+		</div>
+	{% endfor %}
+	<a href="{{ path('profil_edit') }}" class="btn btn-success mt-2">Modifier mes infos</a> 
+	{% if comments %}
+
+	<table class="table">
+		<thead>
+			<th>Contenu</th>
+			<th>Posté le</th>
+			<th>Article</th>
+		</thead>
+		<tbody>
+			{% for com in comments %}
+				<tr>
+					<td> {{ com.content | raw }} </td>
+					<td> {{ com.createdAt | date('d/m/Y à H:i:s') }} </td>
+					<td>
+						<a href="{{ path('blog_show', {'id': com.article.id }) }}">{{ com.article.title }}</a> 
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>		
+	</table>
+	{% else %}
+		<h2 class="text-center mt-3">Vous n'avez pas encore posté de commentaire</h2>
+	{% endif %}
+{% endblock %}
